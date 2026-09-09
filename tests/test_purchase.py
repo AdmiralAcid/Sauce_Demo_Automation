@@ -1,5 +1,5 @@
 import time
-
+import allure
 import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
@@ -14,6 +14,7 @@ from pages.checkout_info_page import CheckoutInfo
 from pages.final_page import FinalPage
 from pages.main_page import MainPage
 from pages.payment_page import PaymentPage
+from utilities.logger import Logger
 
 #options
 options = webdriver.ChromeOptions()
@@ -24,7 +25,8 @@ options.add_argument('--guest')
 driver = webdriver.Chrome(options=options, service=ChromeService(ChromeDriverManager().install()))
 
 @pytest.mark.run(order=3)
-def test_backpack_purchase(set_group):
+@allure.description("Test Backpack Purchase")
+def test_backpack_purchase(auto_log):
     print('Start Testing Backpack Purchase')
 
     auth = Auth(driver)
@@ -44,11 +46,11 @@ def test_backpack_purchase(set_group):
     
     final_page = FinalPage(driver)
     final_page.finish()
+    Logger.write_url(driver.current_url)
 
 @pytest.mark.run(order=2)
-def test_bikelight_purchase(set_group):
+def test_bikelight_purchase(auto_log):
     print('Start Testing Bike Light Purchase')
-
     auth = Auth(driver)
     auth.authorization('standard_user', 'secret_sauce')
 
@@ -66,9 +68,10 @@ def test_bikelight_purchase(set_group):
 
     final_page = FinalPage(driver)
     final_page.finish()
+    Logger.write_url(driver.current_url)
 
 @pytest.mark.run(order=1)
-def test_jacket_purchase():
+def test_jacket_purchase(auto_log):
     print('Start Testing Fleece Jacket Purchase')
 
     auth = Auth(driver)
@@ -88,3 +91,4 @@ def test_jacket_purchase():
 
     final_page = FinalPage(driver)
     final_page.finish()
+    Logger.write_url(driver.current_url)

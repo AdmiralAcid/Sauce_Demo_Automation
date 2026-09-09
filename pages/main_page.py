@@ -1,7 +1,7 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-
+import allure
 from base.base_class import Base
 
 
@@ -65,19 +65,22 @@ class MainPage(Base):
         print('Opening "About" link')
 
     def select_backpack(self):
-        print(f'current URL is {self.get_url()}')
-        self.add_backpack()
-        self.open_shopping_cart()
+        with allure.step("Select backpack"):
+            print(f'current URL is {self.get_url()}')
+            self.add_backpack()
+            self.open_shopping_cart()
 
     def select_bike_light(self):
-        print(f'current URL is {self.get_url()}')
-        self.add_bike_light()
-        self.open_shopping_cart()
+        with allure.step("Select bike light"):
+            print(f'current URL is {self.get_url()}')
+            self.add_bike_light()
+            self.open_shopping_cart()
 
     def select_jacket(self):
-        print(f'current URL is {self.get_url()}')
-        self.add_jacket()
-        self.open_shopping_cart()
+        with allure.step("Select jacket"):
+            print(f'current URL is {self.get_url()}')
+            self.add_jacket()
+            self.open_shopping_cart()
 
     def select_menu_about(self):
         print(f'current URL is {self.get_url()}')

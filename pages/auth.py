@@ -1,9 +1,8 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-
+import allure
 from base.base_class import Base
-
 
 class Auth(Base):
 
@@ -48,10 +47,11 @@ class Auth(Base):
         print('Login in')
 
     def authorization(self, username, passw):
-        self.driver.get(self.url)
-        self.driver.maximize_window()
-        print(f'current URL is {self.get_url()}')
-        self.input_username(username)
-        self.input_password(passw)
-        self.auth_click()
-        self.assert_word(self.get_title(), 'Products')
+        with allure.step("Authorization"):
+            self.driver.get(self.url)
+            self.driver.maximize_window()
+            print(f'current URL is {self.get_url()}')
+            self.input_username(username)
+            self.input_password(passw)
+            self.auth_click()
+            self.assert_word(self.get_title(), 'Products')

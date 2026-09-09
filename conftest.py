@@ -1,5 +1,5 @@
 import pytest
-from selenium import webdriver
+from utilities.logger import Logger
 
 
 @pytest.fixture()
@@ -13,3 +13,9 @@ def set_group():
     print("enter the system")
     yield
     print("exit the system")
+
+@pytest.fixture(autouse=True)
+def auto_log(request):
+    Logger.add_start_step(test_name=request.node.name)
+    yield
+    Logger.add_end_step()

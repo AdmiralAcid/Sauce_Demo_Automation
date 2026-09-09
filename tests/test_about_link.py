@@ -1,5 +1,5 @@
 import time
-
+import allure
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
@@ -21,10 +21,11 @@ options.add_argument('--guest')
 driver = webdriver.Chrome(options=options, service=ChromeService(ChromeDriverManager().install()))
 
 def test_about_link():
-    print('Start Testing "About" link')
+    with allure.step("Testing About link"):
+        print('Start Testing "About" link')
 
-    auth = Auth(driver)
-    auth.authorization('standard_user', 'secret_sauce')
+        auth = Auth(driver)
+        auth.authorization('standard_user', 'secret_sauce')
 
-    main_page = MainPage(driver)
-    main_page.select_menu_about()
+        main_page = MainPage(driver)
+        main_page.select_menu_about()

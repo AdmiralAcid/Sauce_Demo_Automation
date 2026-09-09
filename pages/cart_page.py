@@ -1,7 +1,7 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-
+import allure
 from base.base_class import Base
 
 
@@ -21,5 +21,6 @@ class CartPage(Base):
 
     # actions
     def open_checkout(self):
-        self.get_checkout().click()
-        print('Checking out!')
+        with allure.step("Check out"):
+            self.get_checkout().click()
+            print('Checking out!')

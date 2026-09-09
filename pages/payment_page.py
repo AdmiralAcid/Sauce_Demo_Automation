@@ -1,7 +1,7 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-
+import allure
 from base.base_class import Base
 
 
@@ -22,9 +22,11 @@ class PaymentPage(Base):
 
     # actions
     def finish_checkout(self):
-        self.get_finish_button().click()
-        print('Going to payment')
+        with allure.step("Finish checkout"):
+            self.get_finish_button().click()
+            print('Going to payment')
 
-    def select_product(self):
-        print(f'current URL is {self.get_url()}')
-        self.finish_checkout()
+    # def select_product(self):
+    #     with allure.step("Select bike light"):
+    #     print(f'current URL is {self.get_url()}')
+    #     self.finish_checkout()
