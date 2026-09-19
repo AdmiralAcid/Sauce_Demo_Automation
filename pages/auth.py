@@ -7,11 +7,9 @@ from base.base_class import Base
 class Auth(Base):
 
     url = 'https://www.saucedemo.com'
-    #driver = webdriver.Chrome()
 
     def __init__(self, driver):
         super().__init__(driver)
-        self.driver = driver
         print('Start auth')
 
     # locators

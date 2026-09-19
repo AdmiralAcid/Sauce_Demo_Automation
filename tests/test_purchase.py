@@ -3,10 +3,7 @@ import allure
 import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.wait import WebDriverWait
 from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.support import expected_conditions as EC
 
 from pages.auth import Auth
 from pages.cart_page import CartPage
@@ -21,13 +18,13 @@ options = webdriver.ChromeOptions()
 options.add_experimental_option('detach', True)
 options.add_argument('--guest')
 
-# driver stuff
-driver = webdriver.Chrome(options=options, service=ChromeService(ChromeDriverManager().install()))
-
 @pytest.mark.run(order=3)
 @allure.description("Test Backpack Purchase")
 def test_backpack_purchase(auto_log):
     print('Start Testing Backpack Purchase')
+
+    # driver stuff
+    driver = webdriver.Chrome(options=options, service=ChromeService(ChromeDriverManager().install()))
 
     auth = Auth(driver)
     auth.authorization('standard_user', 'secret_sauce')
@@ -51,6 +48,10 @@ def test_backpack_purchase(auto_log):
 @pytest.mark.run(order=2)
 def test_bikelight_purchase(auto_log):
     print('Start Testing Bike Light Purchase')
+
+    # driver stuff
+    driver = webdriver.Chrome(options=options, service=ChromeService(ChromeDriverManager().install()))
+
     auth = Auth(driver)
     auth.authorization('standard_user', 'secret_sauce')
 
@@ -73,6 +74,9 @@ def test_bikelight_purchase(auto_log):
 @pytest.mark.run(order=1)
 def test_jacket_purchase(auto_log):
     print('Start Testing Fleece Jacket Purchase')
+
+    # driver stuff
+    driver = webdriver.Chrome(options=options, service=ChromeService(ChromeDriverManager().install()))
 
     auth = Auth(driver)
     auth.authorization('standard_user', 'secret_sauce')

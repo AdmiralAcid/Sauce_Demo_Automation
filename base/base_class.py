@@ -17,7 +17,7 @@ class Base:
     def get_screenshot(self):
         now_date = datetime.datetime.utcnow().strftime('%Y%m%d%H%M%S')
         screen_name = 'screenshot' + now_date + '.png'
-        self.driver.save_screenshot('C:\\Users\\satur\\PycharmProjects\\AutomationProject\\screen\\' + screen_name)
+        self.driver.save_screenshot('screen\\' + screen_name)
 
     def assert_url(self, url):
         curr_url = self.driver.current_url
