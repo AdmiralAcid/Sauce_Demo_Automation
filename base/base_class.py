@@ -21,5 +21,6 @@ class Base:
 
     def assert_url(self, url):
         curr_url = self.driver.current_url
+        print(curr_url)
         assert curr_url == url
-        print('URL is right')
+        print(f'URL {curr_url} is right')

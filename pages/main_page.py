@@ -18,6 +18,7 @@ class MainPage(Base):
     shopping_cart_loc = '//a[@data-test="shopping-cart-link"]'
     burger_loc = 'react-burger-menu-btn'
     burger_about_loc = 'about_sidebar_link'
+    item_img = '//img[@class="inventory_item_img"]'
 
     # getters
     def get_backpack_add(self):
@@ -37,6 +38,9 @@ class MainPage(Base):
 
     def get_burger_about(self):
         return WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, self.burger_about_loc)))
+
+    def get_item_img_objs(self):
+        return self.driver.find_elements(By.XPATH, self.item_img)
 
     # actions
     def add_backpack(self):

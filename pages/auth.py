@@ -10,13 +10,14 @@ class Auth(Base):
 
     def __init__(self, driver):
         super().__init__(driver)
-        print('Start auth')
+        print('\nStart auth:')
 
     # locators
     username_loc = 'user-name'
     password_loc = 'password'
     login_loc = 'login-button'
     title_loc = '//span[@class="title"]'
+    error_loc = '//h3[@data-test="error"]'
 
     # getters
     def get_username(self):
@@ -31,18 +32,25 @@ class Auth(Base):
     def get_title(self):
         return WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.title_loc)))
 
+    def get_error_message(self):
+        return WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.error_loc)))
+
     # actions
     def input_username(self, payload):
         self.get_username().send_keys(payload)
-        print('Login input')
+        print(f'Login {payload} input')
 
     def input_password(self, payload):
         self.get_password().send_keys(payload)
-        print('Password input')
+        print(f'Password {payload} input')
 
     def auth_click(self):
         self.get_login_button().click()
-        print('Login in')
+        print('Logging in')
+
+    def check_error_text(self, error_text):
+        err_txt = self.get_error_message().text
+        assert error_text == err_txt
 
     def authorization(self, username, passw):
         with allure.step("Authorization"):
@@ -52,4 +60,4 @@ class Auth(Base):
             self.input_username(username)
             self.input_password(passw)
             self.auth_click()
-            self.assert_word(self.get_title(), 'Products')
+            # self.assert_word(self.get_title(), 'Products')
