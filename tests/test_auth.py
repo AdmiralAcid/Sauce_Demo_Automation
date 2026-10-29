@@ -171,3 +171,41 @@ def test_wrong_login_password():
     print("Can't login with wrong username and password")
 
     driver.close()
+
+def test_repeat_input_auth():
+    driver = webdriver.Chrome(options=options, service=ChromeService(ChromeDriverManager().install()))
+
+    auth = Auth(driver)
+    auth.authorization('1@1@1', '12345!»№;%')
+
+    # check if we've got right error message
+    auth.check_error_text('Epic sadface: Username and password do not match any user in this service')
+
+    # close error message
+    auth.close_err_msg()
+
+    # try again
+    auth.authorization('standard_user', 'secret_sauce')
+
+    # let's check current URL as we should be on main page now
+    auth.assert_url("https://www.saucedemo.com/inventory.html")
+
+    print('Successful login after an unsuccessful one')
+
+    driver.close()
+
+def test_skip_auth():
+    driver = webdriver.Chrome(options=options, service=ChromeService(ChromeDriverManager().install()))
+
+    auth = Auth(driver)
+    auth.try_to_skip_authorization('https://www.saucedemo.com/inventory.html')
+
+    # check if we are on auth page
+    auth.assert_url("https://www.saucedemo.com/")
+
+    # check if we've got right error message
+    auth.check_error_text("Epic sadface: You can only access '/inventory.html' when you are logged in.")
+
+    print("Can't skip authorization")
+
+    driver.close()

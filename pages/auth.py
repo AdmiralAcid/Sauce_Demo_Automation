@@ -18,6 +18,7 @@ class Auth(Base):
     login_loc = 'login-button'
     title_loc = '//span[@class="title"]'
     error_loc = '//h3[@data-test="error"]'
+    close_msg_loc = 'error-button'
 
     # getters
     def get_username(self):
@@ -34,6 +35,9 @@ class Auth(Base):
 
     def get_error_message(self):
         return WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.error_loc)))
+
+    def get_err_msg_close_button(self):
+        return WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, self.close_msg_loc)))
 
     # actions
     def input_username(self, payload):
@@ -52,6 +56,10 @@ class Auth(Base):
         err_txt = self.get_error_message().text
         assert error_text == err_txt
 
+    def close_err_msg(self):
+        self.get_err_msg_close_button().click()
+        print('Closing error message')
+
     def authorization(self, username, passw):
         with allure.step("Authorization"):
             self.driver.get(self.url)
@@ -61,3 +69,8 @@ class Auth(Base):
             self.input_password(passw)
             self.auth_click()
             # self.assert_word(self.get_title(), 'Products')
+
+    def try_to_skip_authorization(self, other_url):
+        self.driver.get(other_url)
+        self.driver.maximize_window()
+        print(f'current URL is {self.get_url()}')
